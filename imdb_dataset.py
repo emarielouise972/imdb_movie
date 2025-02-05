@@ -67,9 +67,9 @@ print(count_genre)
 #note_moyenne films par décennie
 print('\n')
 
-print(df['Date'])  # Affiche les valeurs uniques de la colonne Date
+print(df['Date'])#Affiche les valeurs uniques de la colonne Date
 
-print(df.columns)  # Vérifie si 'Global_Rating' est bien dans la liste des colonnes
+print(df.columns)#Vérifie si 'Global_Rating' est bien dans la liste des colonnes
 print("nombre de global_rating null : ", df['Global_Rating'].isnull().sum())  # Vérifie s'il y a des valeurs nulles
 
 
@@ -77,7 +77,7 @@ df['Date'] = df['Date'].str.extract(r'(\d{4})').astype(float)
 df['Date'] = pd.to_numeric(df['Date'],errors = 'coerce')
 df['Decennie'] = (df['Date'] // 10) * 10
 
-print("nombre de date null : ", df['Date'].isnull().sum())  # Affiche le nombre de valeurs nulles
+print("nombre de date null : ", df['Date'].isnull().sum())#Affiche le nombre de valeurs nulles
 
 
 note_moyenne_decennie = df.groupby('Decennie')['Global_Rating'].mean()
@@ -92,16 +92,16 @@ top_genres = df['Gender'].value_counts().nlargest(10)
 plt.figure(figsize=(10, 6))
 sns.barplot(x=top_genres.values, y=top_genres.index, palette="magma")
 
-# Ajouter les labels et le titre
+#Ajouter les labels et le titre
 plt.xlabel("Nombre de films", fontsize=12)
 plt.ylabel("Genre", fontsize=12)
 plt.title("Top 10 des genres de films les plus fréquents", fontsize=14, fontweight="bold")
 
-# Afficher les valeurs sur les barres
+#Afficher les valeurs sur les barres
 for index, value in enumerate(top_genres.values):
     plt.text(value + 1, index, str(value), va="center", fontsize=10)
 
-# Afficher le graphique
+#Afficher le graphique
 plt.show()
 
 sns.set(style="darkgrid")
