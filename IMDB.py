@@ -1,22 +1,7 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sqlalchemy import create_engine
-
-#connection bd 
-DB_USER = "dutinfopw201691"
-DB_PASSWORD = "bygydasa"
-DB_HOST = "database-etudiants.iut.univ-paris8.fr"
-DB_PORT = "3306"
-DB_NAME = "dutinfopw201691"
-
-engine = create_engine(f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
-
-# Charger les données
-query = "SELECT * FROM movies"
-df = pd.read_sql(query, engine)
 
 
+#path = kagglehub.dataset_download("youssefamdouni/imbd-movie-rating")
 path = 'IMBD_movie_rating.csv'
 #load data
 df = pd.read_csv(path)
@@ -82,44 +67,4 @@ print("nombre de date null : ", df['Date'].isnull().sum())  # Affiche le nombre 
 
 note_moyenne_decennie = df.groupby('Decennie')['Global_Rating'].mean()
 print('rating par decennie: ', note_moyenne_decennie)
-
-
-df['Gender'] = df['Gender'].astype(str).str.strip()
-
-
-top_genres = df['Gender'].value_counts().nlargest(10)
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x=top_genres.values, y=top_genres.index, palette="magma")
-
-# Ajouter les labels et le titre
-plt.xlabel("Nombre de films", fontsize=12)
-plt.ylabel("Genre", fontsize=12)
-plt.title("Top 10 des genres de films les plus fréquents", fontsize=14, fontweight="bold")
-
-# Afficher les valeurs sur les barres
-for index, value in enumerate(top_genres.values):
-    plt.text(value + 1, index, str(value), va="center", fontsize=10)
-
-# Afficher le graphique
-plt.show()
-
-sns.set(style="darkgrid")
-
-
-
-plt.figure(figsize=(8, 5))
-sns.histplot(df['Global_Rating'], bins=20, kde=True, color='blue')
-plt.xlabel("Note Globale")
-plt.ylabel("Nombre de Films")
-plt.title("Distribution des Notes Globales")
-plt.show()
-
-plt.figure(figsize=(8, 5))
-sns.scatterplot(x=df['Runtime'], y=df['Global_Rating'], alpha=0.5, color='purple')
-plt.xlabel("Durée du film (minutes)")
-plt.ylabel("Note Globale")
-plt.title("Relation entre la durée et la note globale")
-plt.show()
-
 
